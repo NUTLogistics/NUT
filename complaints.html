@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحة الشكاوى</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            text-align: right;
+        }
+        .logo {
+            display: block;
+            margin: 20px auto;
+            max-width: 150px;
+            height: auto;
+        }
+        .form-container {
+            width: 50%;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-container label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .form-container input,
+        .form-container textarea,
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-container button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #0056b3;
+        }
+        .language-selector {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .back-button {
+            display: block;
+            width: 50%;
+            margin: 20px auto;
+            text-align: center;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .back-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <img src="IMG-20241216-WA0023.jpg" alt="Logo" class="logo">
+    <div class="language-selector">
+        <label id="label-language" for="language">اختر اللغة:</label>
+        <select id="language" onchange="changeLanguage()">
+            <option value="ar">العربية</option>
+            <option value="en">English</option>
+            <option value="ru">Русский</option>
+            <option value="nl">Nederlands</option>
+            <option value="zh">中文</option>
+            <option value="it">Italiano</option>
+            <option value="de">Deutsch</option>
+        </select>
+    </div>
+
+    <div class="form-container">
+        <h1 id="title">صفحة الشكاوى</h1>
+        <form id="complaint-form">
+            <label id="label-name" for="name">الاسم:</label>
+            <input type="text" id="name" name="name" placeholder="أدخل اسمك" required>
+
+            <label id="label-email" for="email">البريد الإلكتروني:</label>
+            <input type="email" id="email" name="email" placeholder="أدخل بريدك الإلكتروني" required>
+
+            <label id="label-complaint" for="complaint">تفاصيل الشكوى:</label>
+            <textarea id="complaint" name="complaint" rows="5" placeholder="اكتب الشكوى هنا" required></textarea>
+
+            <button type="button" onclick="submitComplaint()" id="submit-button">إرسال الشكوى</button>
+        </form>
+    </div>
+
+    <a href="index.html" class="back-button">Back to home page </a>
+
+    <script>
+        const translations = {
+            ar: {
+                title: "صفحة الشكاوى",
+                language: "اختر اللغة:",
+                name: "الاسم:",
+                email: "البريد الإلكتروني:",
+                complaint: "تفاصيل الشكوى:",
+                submit: "إرسال الشكوى",
+                placeholderName: "أدخل اسمك",
+                placeholderEmail: "أدخل بريدك الإلكتروني",
+                placeholderComplaint: "اكتب الشكوى هنا"
+            },
+            en: {
+                title: "Complaints Page",
+                language: "Choose Language:",
+                name: "Name:",
+                email: "Email:",
+                complaint: "Complaint Details:",
+                submit: "Submit Complaint",
+                placeholderName: "Enter your name",
+                placeholderEmail: "Enter your email",
+                placeholderComplaint: "Write your complaint here"
+            },
+            ru: {
+                title: "Страница жалоб",
+                language: "Выберите язык:",
+                name: "Имя:",
+                email: "Электронная почта:",
+                complaint: "Детали жалобы:",
+                submit: "Отправить жалобу",
+                placeholderName: "Введите ваше имя",
+                placeholderEmail: "Введите ваш email",
+                placeholderComplaint: "Напишите вашу жалобу здесь"
+            },
+            nl: {
+                title: "Klachtenpagina",
+                language: "Kies taal:",
+                name: "Naam:",
+                email: "E-mail:",
+                complaint: "Klacht Details:",
+                submit: "Dien Klacht In",
+                placeholderName: "Voer uw naam in",
+                placeholderEmail: "Voer uw e-mail in",
+                placeholderComplaint: "Schrijf hier uw klacht"
+            },
+            zh: {
+                title: "投诉页面",
+                language: "选择语言:",
+                name: "姓名：",
+                email: "电子邮件：",
+                complaint: "投诉详情：",
+                submit: "提交投诉",
+                placeholderName: "输入你的名字",
+                placeholderEmail: "输入你的电子邮件",
+                placeholderComplaint: "在这里写下你的投诉"
+            },
+            it: {
+                title: "Pagina dei Reclami",
+                language: "Scegli la lingua:",
+                name: "Nome:",
+                email: "Email:",
+                complaint: "Dettagli del Reclamo:",
+                submit: "Invia Reclamo",
+                placeholderName: "Inserisci il tuo nome",
+                placeholderEmail: "Inserisci la tua email",
+                placeholderComplaint: "Scrivi qui il tuo reclamo"
+            },
+            de: {
+                title: "Beschwerdeseite",
+                language: "Sprache wählen:",
+                name: "Name:",
+                email: "E-Mail:",
+                complaint: "Beschwerdedetails:",
+                submit: "Beschwerde einreichen",
+                placeholderName: "Geben Sie Ihren Namen ein",
+                placeholderEmail: "Geben Sie Ihre E-Mail ein",
+                placeholderComplaint: "Schreiben Sie hier Ihre Beschwerde"
+            }
+        };
+
+        function changeLanguage() {
+            const language = document.getElementById("language").value;
+            const translation = translations[language];
+
+            document.getElementById("title").textContent = translation.title;
+            document.getElementById("label-language").textContent = translation.language;
+            document.getElementById("label-name").textContent = translation.name;
+            document.getElementById("label-email").textContent = translation.email;
+            document.getElementById("label-complaint").textContent = translation.complaint;
+            document.getElementById("submit-button").textContent = translation.submit;
+
+            document.getElementById("name").placeholder = translation.placeholderName;
+            document.getElementById("email").placeholder = translation.placeholderEmail;
+            document.getElementById("complaint").placeholder = translation.placeholderComplaint;
+        }
+
+        function submitComplaint() {
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const complaint = document.getElementById("complaint").value;
+
+            if (name && email && complaint) {
+                alert("تم إرسال الشكوى بنجاح. شكرًا لتواصلك معنا.");
+                document.getElementById("complaint-form").reset();
+            } else {
+                alert("يرجى ملء جميع الحقول قبل الإرسال.");
+            }
+        }
+    </script>
+</body>
